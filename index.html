@@ -170,9 +170,8 @@
       headers: { 'Accept': 'application/json' }
     }).then(response => {
       if (response.ok) {
-        mensaje.textContent = "Gracias por enviar tu solicitud, te contactaremos pronto.";
-        mensaje.style.color = "#27ae60";
-        form.reset();
+        // Redirigir a la página de verificación
+        window.location.href = "espera_verificacion.html";
       } else {
         response.json().then(data => {
           if (Object.hasOwn(data, 'errors')) {
