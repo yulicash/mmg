@@ -4,15 +4,14 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Solicitud de Ayuda - Fundación Hope</title>
+
+<!-- Fuente moderna -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+
 <style>
-  /* Reset básico */
-  *, *::before, *::after {
-    box-sizing: border-box;
-  }
-  
   body {
     margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Montserrat', sans-serif;
     background: linear-gradient(135deg, #6a11cb, #2575fc);
     color: #333;
     min-height: 100vh;
@@ -21,101 +20,121 @@
     align-items: center;
     padding: 20px;
   }
-  
   .container {
     background: #fff;
     padding: 40px 50px;
     border-radius: 12px;
     box-shadow: 0 8px 30px rgba(0,0,0,0.12);
     width: 100%;
-    max-width: 600px;
+    max-width: 700px;
   }
-  
   .logo {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
   }
-  
   .logo img {
     max-width: 180px;
     height: auto;
   }
-  
   h1 {
-    margin-bottom: 25px;
+    margin-bottom: 30px;
     font-weight: 700;
     color: #2575fc;
     text-align: center;
   }
-  
   h2 {
     font-size: 22px;
     color: #2c3e50;
     margin-bottom: 15px;
     border-bottom: 2px solid #2980b9;
     padding-bottom: 5px;
-    margin-top: 35px;
+    margin-top: 40px;
   }
-  
+  form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .form-group {
+    flex: 1 1 45%; /* Ocupa 45% y ajusta flex */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .form-group-full {
+    flex: 1 1 100%;
+  }
   label {
-    display: block;
     font-weight: 600;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     color: #34495e;
   }
-  
   input[type="text"],
   input[type="email"],
   input[type="tel"],
   input[type="number"],
-  textarea,
-  select {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 22px;
-    border: 1.5px solid #ccc;
-    border-radius: 8px;
+  select,
+  textarea {
+    padding: 12px 40px 12px 12px; /* espacio para icono a la derecha */
     font-size: 16px;
+    border-radius: 8px;
+    border: 1.5px solid #ccc;
     transition: border-color 0.3s ease;
+    resize: vertical;
   }
-  
   input[type="text"]:focus,
   input[type="email"]:focus,
   input[type="tel"]:focus,
   input[type="number"]:focus,
-  textarea:focus,
-  select:focus {
-    border-color: #2980b9;
+  select:focus,
+  textarea:focus {
+    border-color: #2575fc;
     outline: none;
   }
-  
   textarea {
-    resize: vertical;
     min-height: 100px;
   }
+  /* Iconos con pseudo elemento :after */
+  .form-group:after {
+    content: attr(data-icon);
+    position: absolute;
+    right: 12px;
+    top: 40px;
+    font-family: 'FontAwesome';
+    font-size: 18px;
+    color: #888;
+    pointer-events: none;
+  }
+  /* Reemplazaremos con SVG o íconos desde fuente real luego */
   
   button {
     background-color: #2575fc;
-    color: #fff;
-    padding: 15px;
-    font-size: 18px;
+    color: white;
     font-weight: 700;
+    font-size: 18px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
+    padding: 16px;
     width: 100%;
     box-shadow: 0 4px 12px rgba(37,117,252,0.4);
     transition: background-color 0.3s ease;
+    margin-top: 20px;
   }
-  
   button:hover {
     background-color: #1a54c8;
   }
-  
   #mensaje {
-    margin-top: 25px;
+    margin-top: 30px;
     font-weight: 600;
     text-align: center;
+    color: #27ae60;
+  }
+  /* Responsive */
+  @media (max-width: 600px) {
+    .form-group {
+      flex: 1 1 100%;
+    }
   }
 </style>
 </head>
@@ -127,53 +146,73 @@
   </div>
   
   <h1>Solicitud de Ayuda - Fundación Hope</h1>
-
+  
   <form id="formularioSolicitud" action="https://formspree.io/f/xgoqzbkg" method="POST" enctype="multipart/form-data">
-    
+
     <h2>Datos Personales</h2>
-    
-    <label for="nombre">Nombre completo:</label>
-    <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre completo" />
 
-    <label for="documento">Documento de identidad:</label>
-    <input type="text" id="documento" name="documento" placeholder="DNI, Pasaporte, etc." required />
+    <div class="form-group" data-icon="👤">
+      <label for="nombre">Nombre completo:</label>
+      <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre completo" />
+    </div>
 
-    <label for="edad">Edad:</label>
-    <input type="number" id="edad" name="edad" min="0" max="120" placeholder="Tu edad" required />
-    
-    <label for="telefono">Teléfono:</label>
-    <input type="tel" id="telefono" name="telefono" placeholder="Número de contacto" required />
-    
-    <label for="correo">Correo electrónico:</label>
-    <input type="email" id="correo" name="correo" required placeholder="tucorreo@example.com" />
-    
-    <label for="direccion">Dirección:</label>
-    <input type="text" id="direccion" name="direccion" placeholder="Calle, ciudad, país" required />
+    <div class="form-group" data-icon="🆔">
+      <label for="documento">Documento de identidad:</label>
+      <input type="text" id="documento" name="documento" placeholder="DNI, Pasaporte, etc." required />
+    </div>
+
+    <div class="form-group" data-icon="🎂">
+      <label for="edad">Edad:</label>
+      <input type="number" id="edad" name="edad" min="0" max="120" placeholder="Tu edad" required />
+    </div>
+
+    <div class="form-group" data-icon="📞">
+      <label for="telefono">Teléfono:</label>
+      <input type="tel" id="telefono" name="telefono" placeholder="Número de contacto" required />
+    </div>
+
+    <div class="form-group" data-icon="✉️">
+      <label for="correo">Correo electrónico:</label>
+      <input type="email" id="correo" name="correo" required placeholder="tucorreo@example.com" />
+    </div>
+
+    <div class="form-group form-group-full" data-icon="🏠">
+      <label for="direccion">Dirección:</label>
+      <input type="text" id="direccion" name="direccion" placeholder="Calle, ciudad, país" required />
+    </div>
 
     <h2>Información de la Ayuda</h2>
 
-    <label for="tipoAyuda">Tipo de ayuda solicitada:</label>
-    <select id="tipoAyuda" name="tipoAyuda" required>
-      <option value="" disabled selected>Selecciona una opción</option>
-      <option value="Economica">Económica</option>
-      <option value="Alimentos">Alimentos</option>
-      <option value="Ropa">Ropa</option>
-      <option value="Medica">Ayuda médica</option>
-      <option value="Otra">Otra</option>
-    </select>
-    
-    <label for="cantidad">Cantidad o descripción:</label>
-    <textarea id="cantidad" name="cantidad" placeholder="Especifica la cantidad o más detalles" required></textarea>
+    <div class="form-group form-group-full" data-icon="📋">
+      <label for="tipoAyuda">Tipo de ayuda solicitada:</label>
+      <select id="tipoAyuda" name="tipoAyuda" required>
+        <option value="" disabled selected>Selecciona una opción</option>
+        <option value="Economica">Económica</option>
+        <option value="Alimentos">Alimentos</option>
+        <option value="Ropa">Ropa</option>
+        <option value="Medica">Ayuda médica</option>
+        <option value="Otra">Otra</option>
+      </select>
+    </div>
 
-    <label for="comprobante">Adjuntar comprobante (opcional):</label>
-    <input type="file" id="comprobante" name="comprobante" accept=".jpg,.jpeg,.png,.pdf" />
+    <div class="form-group form-group-full" data-icon="✏️">
+      <label for="cantidad">Cantidad o descripción:</label>
+      <textarea id="cantidad" name="cantidad" placeholder="Especifica la cantidad o más detalles" required></textarea>
+    </div>
+
+    <div class="form-group form-group-full" data-icon="📎">
+      <label for="comprobante">Adjuntar comprobante (opcional):</label>
+      <input type="file" id="comprobante" name="comprobante" accept=".jpg,.jpeg,.png,.pdf" />
+    </div>
 
     <h2>Confirmación</h2>
 
-    <label>
-      <input type="checkbox" name="terminos" required />  
-      Acepto que la información proporcionada es verdadera y autorizo su uso para la solicitud.
-    </label>
+    <div class="form-group form-group-full">
+      <label>
+        <input type="checkbox" name="terminos" required />  
+        Acepto que la información proporcionada es verdadera y autorizo su uso para la solicitud.
+      </label>
+    </div>
 
     <button type="submit">Enviar Solicitud</button>
     <p id="mensaje"></p>
