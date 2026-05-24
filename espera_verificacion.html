@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Verificación - Fundación Hope</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f7fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .container {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+  }
+  h1 {
+    margin-bottom: 25px;
+    color: #34495e;
+  }
+  button {
+    background-color: #2980b9;
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  button:hover {
+    background: #1f5f8b;
+  }
+  input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1.5px solid #ccc;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease;
+    display: none;
+  }
+  input[type="text"]:focus {
+    border-color: #2980b9;
+    outline: none;
+  }
+  #mensaje {
+    font-weight: 600;
+    margin-top: 10px;
+    min-height: 24px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Verificación de Código</h1>
+  <p>Por favor, presiona el botón para enviar el código de verificación.</p>
+  <button id="btnEnviarCodigo">Enviar código de verificación</button>
+  <input type="text" id="codigoInput" placeholder="Ingresa el código recibido" maxlength="6" />
+  <button id="btnVerificar" style="display:none;">Verificar Código</button>
+  <p id="mensaje"></p>
+</div>
+
+<script>
+  const btnEnviarCodigo = document.getElementById('btnEnviarCodigo');
+  const btnVerificar = document.getElementById('btnVerificar');
+  const codigoInput = document.getElementById('codigoInput');
+  const mensaje = document.getElementById('mensaje');
+
+  const codigoCorrecto = "123456"; // Cambia este código según tu proceso
+
+  btnEnviarCodigo.addEventListener('click', () => {
+    alert("Código enviado al teléfono registrado.");
+    codigoInput.style.display = "block";
+    btnVerificar.style.display = "block";
+    btnEnviarCodigo.style.display = "none";
+  });
+
+  btnVerificar.addEventListener('click', () => {
+    const codigoIngresado = codigoInput.value.trim();
+
+    if(codigoIngresado === "") {
+      mensaje.textContent = "Por favor, ingresa un código.";
+      mensaje.style.color = "#e74c3c";
+      return;
+    }
+
+    if(codigoIngresado === codigoCorrecto) {
+      mensaje.textContent = "¡Código correcto! Verificación exitosa.";
+      mensaje.style.color = "#27ae60";
+      setTimeout(() => {
+        window.location.href = "gracias.html";
+      }, 3000);
+    } else {
+      mensaje.textContent = "Código incorrecto. Intenta de nuevo.";
+      mensaje.style.color = "#e74c3c";
+    }
+  });
+</script>
+
+</body>
+</html>
